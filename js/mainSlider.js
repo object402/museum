@@ -58,28 +58,45 @@ function slide01Action(){
    //자동재생 처리(gallery_01 함수 호출)
    play_01 = setInterval(gallery_01, 2000)
 
+   //********************수정 //ul width 값도 바꿔야햄width: 8680px;
+   //img갯수 imgLength_01
+   //ul : daily-exhibition 첫번째 슬라이드
+   var list = $('.daily-exhibition');
+   //보여지는 슬라이드 갯수: 1
+   var show_num = 1;
+   //이미지크기: img_width
+   //이미지 갯수: imgLength_01
+   //슬라이드 순서 i
    var i = 0;
+   //복제
+   var copyObj = $('.daily-exhibition li:lt(' + show_num + ')').clone();
+   list.append(copyObj);
+   console.log('copyObj: ' + copyObj.width());
+
+
    //이미지 슬라이드 처리
    function gallery_01(){
-      if(flag_01){
-         flag_01 = false;//비활성화
-         //페이징 활성화 상태 초기화
-         $('#slide01 .paging a').removeClass('active');
-         if(arrow_01.hasClass('prev')){
-            i--;//이전일 경우 감소
-         }else{
-            i++;//다음일 경우 증가
-         }
-         //무한대로 증가, 감소하는 것을 막아줌.
-         if(i<0){i=page_01-1;}
-         if(i>=page_01){i=0;}
-         $('#slide01 .slide_contents>ul').animate({'left':-(i*imgWidth)},1000, function(){flag_01=true;});//애니메이션 종료후 다시 활성화 상태
-
-         //해당 페이징 활성화
-         $('#slide01 .paging a').eq(i).addClass('active');
-         //console.log('인덱스값' + i);
+      if(i == imgLength_01){
+         i = 0 ;
+         list.css({
+            'margin-left': 0
+         })
       }
+      i++;
+      list.stop().animate({
+         marginLeft: -imgWidth * i
+      })
+
+      $('#slide01 .paging a').removeClass('active');
+      $('#slide01 .paging a').eq(i).addClass('active');
+
+      if(i == imgLength_01){
+         $('#slide01 .paging a').eq(0).addClass('active');
+      }
+      return false;
+
    }
+//********************수정
 
 
    //갤러리 정지
@@ -173,28 +190,36 @@ function slide02Action(){
    //자동재생 처리(gallery_02 함수 호출)
    play_02 = setInterval(gallery_02, 2000)
 
+   //********************수정 //ul width 값도 바꿔야햄width: 8680px;
+   var list02 = $('.special-exhibition');
+   var show_num02 = 1;
    var i = 0;
+
+   var copyObj02 = $('.special-exhibition li:lt(' + show_num02 + ')').clone();
+   list02.append(copyObj02);
+   console.log('copyObj: ' + copyObj02.width());
    //이미지 슬라이드 처리
    function gallery_02(){
-      if(flag_02){
-         flag_02 = false;//비활성화
-         //페이징 활성화 상태 초기화
-         $('#slide02 .paging a').removeClass('active');
-         if(arrow_02.hasClass('prev')){
-            i--;//이전일 경우 감소
-         }else{
-            i++;//다음일 경우 증가
-         }
-         //무한대로 증가, 감소하는 것을 막아줌.
-         if(i<0){i=page_02-1;}
-         if(i>=page_02){i=0;}
-         $('#slide02 .slide_contents>ul').animate({'left':-(i*imgWidth)},1000, function(){flag_02=true;});//애니메이션 종료후 다시 활성화 상태
-
-         //해당 페이징 활성화
-         $('#slide02 .paging a').eq(i).addClass('active');
-         //console.log('인덱스값' + i);
+      if(i == imgLength_02){
+         i = 0 ;
+         list02.css({
+            'margin-left': 0
+         })
       }
+      i++;
+      list02.stop().animate({
+         marginLeft: -imgWidth * i
+      })
+
+      $('#slide02 .paging a').removeClass('active');
+      $('#slide02 .paging a').eq(i).addClass('active');
+
+      if(i == imgLength_02){
+         $('#slide02 .paging a').eq(0).addClass('active');
+      }
+      return false;
    }
+//********************수정
 
 
    //갤러리 정지
