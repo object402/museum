@@ -642,6 +642,11 @@ div.footer_info_right img {
  margin-left: -200px;
  z-index: 500;
 }
+.tabs::after{
+   content: "";
+   display: block;
+   clear: both;
+}
 
 .tabs .left_tab, .tabs .right_tab {
  width: 200px;
@@ -651,8 +656,7 @@ div.footer_info_right img {
  line-height: 34px;
  text-align: center;
  font-weight: bold;
- display: inline-block;
- margin-left: -4px;
+ float:left;
 }
 
 .tabs a.selected {
