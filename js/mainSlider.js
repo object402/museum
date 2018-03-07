@@ -1,6 +1,3 @@
-//***problem***
-//1.cloning the first img to the last section(not to be turned back to the first from the last)
-//2.when another slide is active, the other one should be reset
 $(function(){
    slide01Action();
    $('#slide02').css({'display':'none'});
@@ -19,26 +16,20 @@ $(function(){
    })
 })
 
+
+
 //******상설전시 슬라이드 활성화******
 function slide01Action(){
-   // if($('#slide01').css('display') === 'none'){
-   //    // clearInterval(play_01);
-   //    alert(1);
-   // }else{
-   //    // play_01 = setInterval(gallery_01,2000);
-   //    alert(2);
-   // }
 
    //상설/특별전시탭 활성화
    $('#slide01 .left_tab').addClass('selected');
 
-   var flag_01 = true;
    var imgWidth = $('.wrap').width();
    var imgLength_01 = $('#slide01 .wrap img').length;
-   console.log("이미지폭: " + imgWidth + ", 이미지수: " + imgLength_01);
+   // console.log("이미지폭: " + imgWidth + ", 이미지수: " + imgLength_01);
 
    var page_01 = imgLength_01;
-   console.log("페이지버튼 수:" + page_01);
+   // console.log("페이지버튼 수:" + page_01);
 
    //페이지버튼 초기화
    for(var i = 0; i < page_01; i++){
@@ -48,17 +39,13 @@ function slide01Action(){
       }
    }
 
-   // var copyImg = $('li:lt(1)').clone();
-   // $('.slide_contents ul').append(copyImg);
-   // console.log(copyImg.src());
-
    //이전/다음버튼 초기화
    var arrow_01 = $('#slide01 .next');
 
    //자동재생 처리(gallery_01 함수 호출)
    play_01 = setInterval(gallery_01, 2000)
 
-   //********************수정 //ul width 값도 바꿔야햄width: 8680px;
+   //---------수정------------
    //img갯수 imgLength_01
    //ul : daily-exhibition 첫번째 슬라이드
    var list = $('.daily-exhibition');
@@ -71,7 +58,7 @@ function slide01Action(){
    //복제
    var copyObj = $('.daily-exhibition li:lt(' + show_num + ')').clone();
    list.append(copyObj);
-   console.log('copyObj: ' + copyObj.width());
+   // console.log('copyObj: ' + copyObj.width());
 
 
    //이미지 슬라이드 처리
@@ -96,7 +83,7 @@ function slide01Action(){
       return false;
 
    }
-//********************수정
+//---------수정------------
 
 
    //갤러리 정지
@@ -107,11 +94,53 @@ function slide01Action(){
    }
 
    //이전/다음 버튼
-   $('#slide01 .arrow').click(function(e){
+   // $('#slide01 .arrow').click(function(e){
+   //    e.preventDefault();
+   //    arrow_01 = $(this);//이전, 다음
+   //    stop_01();//자동으로 롤링되고 있는 이미지를 정지
+   //    gallery_01();//사용자가 제어하는 이미지 롤링
+   // })
+
+   //다음 버튼 클릭시
+   $('#slide01 .next').click(function(e){
       e.preventDefault();
-      arrow_01 = $(this);//이전, 다음
-      stop_01();//자동으로 롤링되고 있는 이미지를 정지
-      gallery_01();//사용자가 제어하는 이미지 롤링
+      stop_01();
+      if(i == imgLength_01){
+         i = 0;
+         list.css({'margin-left':0});
+      }
+      i++;
+      list.stop().animate({
+         marginLeft: -imgWidth * i
+      })
+
+      $('#slide01 .paging a').removeClass('active');
+      $('#slide01 .paging a').eq(i).addClass('active');
+
+      if(i == imgLength_01){
+         $('#slide01 .paging a').eq(0).addClass('active');
+      }
+   })
+
+   //이전버튼 클릭시
+   $('#slide01 .prev').click(function(e){
+      e.preventDefault();
+      stop_01();
+      if(i == 0){
+         i = imgLength_01;
+         list.css({'margin-left': -(imgWidth * imgLength_01)});
+      }
+      i--;
+      list.stop().animate({
+         marginLeft: -imgWidth * i
+      })
+
+      $('#slide01 .paging a').removeClass('active');
+      $('#slide01 .paging a').eq(i).addClass('active');
+
+      if(i == imgLength_01){
+         $('#slide01 .paging a').eq(0).addClass('active');
+      }
    })
 
    //재생버튼
@@ -149,13 +178,6 @@ function slide01Action(){
 
 //******특별전시 슬라이드 활성화******
 function slide02Action(){
-   // if($('#slide02').css('display') === 'none'){
-   //    alert(1);
-   //    clearInterval(play_02);
-   // }else{
-   //    alert(2);
-   //    play_02 = setInterval(gallery_02,2000);
-   // }
 
    //상설/특별전시탭 활성화
    $('#slide02 .right_tab').addClass('selected');
@@ -163,10 +185,10 @@ function slide02Action(){
    var flag_02 = true;
    var imgWidth = $('.wrap').width();
    var imgLength_02 = $('#slide02 .wrap img').length;
-   console.log("이미지폭: " + imgWidth + ", 이미지수: " + imgLength_02);
+   // console.log("이미지폭: " + imgWidth + ", 이미지수: " + imgLength_02);
 
    var page_02 = imgLength_02;
-   console.log("페이지버튼 수:" + page_02);
+   // console.log("페이지버튼 수:" + page_02);
 
    //페이지버튼 초기화
    for(var i = 0; i < page_02; i++){
@@ -176,28 +198,20 @@ function slide02Action(){
       }
    }
 
-   // $('.next').on('click',function(){
-   //    $('.slide_contents>ul').animate({'left':-(imgWidth)});
-   // })
-
-   // var copyImg = $('li:lt(1)').clone();
-   // $('.slide_contents ul').append(copyImg);
-   // console.log(copyImg.src());
-
    //이전/다음버튼 초기화
    var arrow_02 = $('#slide02 .next');
 
    //자동재생 처리(gallery_02 함수 호출)
    play_02 = setInterval(gallery_02, 2000)
 
-   //********************수정 //ul width 값도 바꿔야햄width: 8680px;
+   //---------수정------------
    var list02 = $('.special-exhibition');
    var show_num02 = 1;
    var i = 0;
 
    var copyObj02 = $('.special-exhibition li:lt(' + show_num02 + ')').clone();
    list02.append(copyObj02);
-   console.log('copyObj: ' + copyObj02.width());
+   // console.log('copyObj: ' + copyObj02.width());
    //이미지 슬라이드 처리
    function gallery_02(){
       if(i == imgLength_02){
@@ -219,7 +233,7 @@ function slide02Action(){
       }
       return false;
    }
-//********************수정
+//---------수정------------
 
 
    //갤러리 정지
